@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>mobile_system_control</name>
+  <version>1.0.0</version>
+  <description>The mobile_system_control package</description>
+
+  <maintainer email="jongsoo@g.skku.edu">rise</maintainer>
+  <license>BSD</license>
+
+  <!-- Build tool -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Build dependencies -->
+  <depend>rclcpp</depend>
+  <depend>carla_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+
+  <!-- Run-time dependencies -->
+  <!-- <exec_depend>rclcpp</exec_depend>
+  <exec_depend>carla_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend> -->
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
