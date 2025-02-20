@@ -35,18 +35,20 @@ namespace mobile_system_control
         std::string vehicle_status = "/carla/" + name + "/vehicle_status";
         std::string odometry = "/carla/" + name + "/odometry";
         std::string ctrl2carla = "/carla/" + name + "/vehicle_control_cmd";
-
+        std::string user_ctrl = "/mobile_system_control/" + name + "/control_msg";
+        std::string state2user = "/mobile_system_control/" + name;
+        
         impl_->sub_carla_ego = this->create_subscription<carla_msgs::msg::CarlaEgoVehicleStatus>(
             vehicle_status, 10, std::bind(&Carla::CarlaEgoCallback, this, std::placeholders::_1));
         impl_->sub_carla_obj = this->create_subscription<nav_msgs::msg::Odometry>(
             odometry, 10, std::bind(&Carla::CarlaOdomCallback, this, std::placeholders::_1));
         
         impl_->sub_user_ctrl = this->create_subscription<geometry_msgs::msg::Vector3Stamped>(
-            "/mobile_system_control/control_msg", 10, std::bind(&Carla::UserCtrlCallback, this, std::placeholders::_1));
+            user_ctrl, 10, std::bind(&Carla::UserCtrlCallback, this, std::placeholders::_1));
 
         //impl_->pub_odometry = this->create_publisher<std_msgs::msg::Float32MultiArray>("/mobile_system_control/odometry_csv", 10);
 
-        impl_->pub_state2user = this->create_publisher<std_msgs::msg::Float32MultiArray>("/mobile_system_control/ego_vehicle", 10);
+        impl_->pub_state2user = this->create_publisher<std_msgs::msg::Float32MultiArray>(state2user, 10);
         impl_->pub_ctrl2carla = this->create_publisher<carla_msgs::msg::CarlaEgoVehicleControl>(ctrl2carla, 10);
 
         setTopic();

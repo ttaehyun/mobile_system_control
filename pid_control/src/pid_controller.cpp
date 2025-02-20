@@ -17,16 +17,23 @@ namespace mobile_system_control
 
     PIDController::PIDController() : rclcpp::Node("PID_control_ex_node")
     {
+        this->declare_parameter<std::string>("role_name", "ego_vehicle");
+        std::string name;
+        this->get_parameter("role_name", name);
+
+        std::string carla = "/mobile_system_control/" + name;
+        std::string cmd = "/mobile_system_control/" + name + "/control_msg";
+        std::string err = "/mobile_system_control/" + name + "/err";
         // Initialize subscriber
         sub_carla = this->create_subscription<std_msgs::msg::Float32MultiArray>(
-            "/mobile_system_control/ego_vehicle", 1,
+            carla, 1,
             std::bind(&PIDController::CarlaInputCallback, this, std::placeholders::_1));
 
         // Initialize publisher
         pub_cmd = this->create_publisher<geometry_msgs::msg::Vector3Stamped>(
-            "/mobile_system_control/control_msg", 3);
+            cmd, 3);
 
-        pub_err = this->create_publisher<std_msgs::msg::Float64>("/mobile_system_control/err", 1);
+        pub_err = this->create_publisher<std_msgs::msg::Float64>(err, 1);
         // Declare and get parameters
         this->declare_parameter<std::string>("path", "");
         this->get_parameter("path", data_path);
