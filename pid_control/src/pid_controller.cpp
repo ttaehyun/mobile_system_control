@@ -13,6 +13,7 @@ namespace mobile_system_control
     {
         float x;
         float y;
+        float throttle;
     };
 
     PIDController::PIDController() : rclcpp::Node("PID_control_ex_node")
@@ -43,8 +44,8 @@ namespace mobile_system_control
         this->get_parameter("Ki", Ki);
         this->declare_parameter<float>("Kd", 0.0);
         this->get_parameter("Kd", Kd);
-        this->declare_parameter<float>("accel", 0.0);
-        this->get_parameter("accel", throttle);
+        //->declare_parameter<float>("accel", 0.0);
+        //this->get_parameter("accel", throttle);
 
         err_sum = 0.0;
         prev_err = 0.0;
@@ -68,10 +69,11 @@ namespace mobile_system_control
         char space;
         PointXY temp;
 
-        while (istr >> x >> space >> y)
+        while (istr >> x >> space >> y >> space >> throttle)
         {
             temp.x = static_cast<float>(x);
             temp.y = static_cast<float>(y);
+            temp.throttle = static_cast<float>(throttle);
             track.push_back(temp);
         }
 
@@ -115,7 +117,7 @@ namespace mobile_system_control
         // Integral control
         err_sum += err * time_step;
         const double i_control = Ki * err_sum;
-
+        
         // Derivative control
         double d_control = Kd * (err - prev_err) / time_step;
         prev_err = err;
@@ -133,7 +135,7 @@ namespace mobile_system_control
         geometry_msgs::msg::Vector3Stamped cmd;
         cmd.header.stamp = this->now();
         cmd.header.frame_id = "PID_example";
-        cmd.vector.x = throttle;
+        cmd.vector.x = track[idx_1].throttle;
         cmd.vector.y = -saturated_cmd;
         cmd.vector.z = 0.0;
 

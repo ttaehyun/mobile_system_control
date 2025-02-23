@@ -27,7 +27,7 @@ def generate_launch_description():
                 {'Kp': 2.0},               # Example PID gain parameters
                 {'Ki': 0.5},
                 {'Kd': 0.1},
-                {'accel': 0.4},
+                #{'accel': 0.4},
                 {'role_name': launch.substitutions.LaunchConfiguration('role_name')}
             ]
         )
