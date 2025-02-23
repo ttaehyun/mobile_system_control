@@ -3,11 +3,18 @@
 Trackvisualizer::Trackvisualizer() : Node("track_visualizer") {
     this->declare_parameter<std::string>("csv_dir", "");
     this->get_parameter("csv_dir", csv_dir_);
+    this->declare_parameter<std::string>("role_name", "ego_vehicle");
+    std::string name;
+    this->get_parameter("role_name", name);
 
-    pub_track_ = this->create_publisher<visualization_msgs::msg::Marker>("track",10);
-    pub_vehicle_arrow_ = this->create_publisher<visualization_msgs::msg::Marker>("vehicle_arrow", 10);
-    pub_vehicle_dot_ = this->create_publisher<visualization_msgs::msg::Marker>("vehicle_dot", 10);
-    sub_pose_ = this->create_subscription<std_msgs::msg::Float32MultiArray>("pose", 10, std::bind(&Trackvisualizer::poseCallback, this, std::placeholders::_1));
+    std::string track = "/trackvisualizer/" + name + "/track";
+    std::string vehicle_arrow = "/trackvisualizer/" + name + "/vehicle_arrow";
+    std::string vehicle_dot = "/trackvisualizer/" + name + "/vehicle_dot";
+    std::string pose = "/mobile_system_control/" + name;
+    pub_track_ = this->create_publisher<visualization_msgs::msg::Marker>(track, 10);
+    pub_vehicle_arrow_ = this->create_publisher<visualization_msgs::msg::Marker>(vehicle_arrow, 10);
+    pub_vehicle_dot_ = this->create_publisher<visualization_msgs::msg::Marker>(vehicle_dot, 10);
+    sub_pose_ = this->create_subscription<std_msgs::msg::Float32MultiArray>(pose, 10, std::bind(&Trackvisualizer::poseCallback, this, std::placeholders::_1));
 
     setupMarkers();
     loadTrack();
