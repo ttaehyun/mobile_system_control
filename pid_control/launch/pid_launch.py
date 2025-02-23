@@ -7,7 +7,7 @@ import os
 def generate_launch_description():
     # Get the package path
     package_path = get_package_share_directory('pid_control')
-    track_file_path = os.path.join(package_path,'update_odometry25_1_18.csv')
+    track_file_path = os.path.join(package_path,'waypoint_inxy.csv')
 
     # Declare the launch description
     return launch.LaunchDescription([
