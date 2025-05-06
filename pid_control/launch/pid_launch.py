@@ -7,7 +7,7 @@ import os
 def generate_launch_description():
     # Get the package path
     package_path = get_package_share_directory('pid_control')
-    track_file_path = os.path.join(package_path,'waypoint_inxy.csv')
+    track_file_path = os.path.join(package_path,'250504_pathin_modified.txt')
 
     # Declare the launch description
     return launch.LaunchDescription([
@@ -24,9 +24,9 @@ def generate_launch_description():
             output='screen',
             parameters=[
                 {'path': track_file_path},  # Pass the track file path
-                {'Kp': 2.0},               # Example PID gain parameters
-                {'Ki': 0.5},
-                {'Kd': 0.1},
+                {'Kp': 1.0},               # Example PID gain parameters
+                {'Ki': 0.15},
+                {'Kd': 0.0},
                 #{'accel': 0.4},
                 {'role_name': launch.substitutions.LaunchConfiguration('role_name')}
             ]

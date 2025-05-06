@@ -1,0 +1,47 @@
+<launch>
+
+    <!-- 런치 인자 설정 -->
+    <arg name="location" default="ctrack" />
+    <arg name="start_path" default="2" />
+    <arg name="autonomous_drive_mode" default="true" />
+    <arg name="lfd_param" default="100.0" />
+    <arg name="role_name" default="hero" />
+
+    <node pkg="controller" exec="controller" name="controller" output="screen">
+        <param name="location" value="$(var location)" />
+        <param name="max_lfd" value="15.0" />
+        <param name="min_lfd" value="6.0" />
+        <param name="lfd" value="7.0" />
+        <!--20kph:6 //300rpm-4.5 -->
+        <param name="num" value="50" />
+        <param name="over_steering" value="1.1" />
+        <param name="dynamic_mindist" value="2.0" />
+        <param name="dynamic_objdist" value="20.0" />
+        <param name="avoid_mindist" value="2.0" />
+        <param name="avoid_objdist" value="7.0" />
+        <param name="path_param" value="0.8" />
+        <param name="localizer_mode" value="1" />
+        <!-->default = 1 ( 1: GPS MODE, 2: SLAM Mode , 3: FUSION)-->
+        <param name="lfd_param" value="$(var lfd_param)"/>
+        <param name="start_path" value="$(var start_path)"/>
+        <param name="autonomous_drive_mode" value="$(var autonomous_drive_mode)"/>
+        <param name="role_name" value="$(var role_name)" />
+
+        <!-- ctrack -->
+        <param name="ctrack_x" value="360777.923575" />
+        <param name="ctrack_y" value="4065980.612646" />
+
+        <!-- k-city -->
+        <param name="kcity_x" value="302533.174487" />
+        <param name="kcity_y" value="4124215.34631" />
+
+        <!-- SUNMOON -->
+        <param name="smu_x" value="328227.549701" />
+        <param name="smu_y" value="4074167.614115" />
+
+        <!-- gyeryong -->
+        <param name="gyeryong_x" value="341000" />
+        <param name="gyeryong_y" value="4015400" />
+    </node>
+
+</launch>
