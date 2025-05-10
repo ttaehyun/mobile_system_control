@@ -7,7 +7,7 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     trackvisualizer_dir = get_package_share_directory('trackvisualizer')
     
-    csv_file_path = os.path.join(trackvisualizer_dir, 'update_odometry25_1_18.csv')
+    csv_file_path = os.path.join(trackvisualizer_dir, 'new_waypoint.csv')
 
     return launch.LaunchDescription([
         launch.actions.DeclareLaunchArgument(

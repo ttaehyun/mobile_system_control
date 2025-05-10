@@ -5,6 +5,8 @@
 #include <std_msgs/msg/float32_multi_array.hpp>
 #include <std_msgs/msg/float64.hpp>
 #include <geometry_msgs/msg/vector3_stamped.hpp>
+#include <geometry_msgs/msg/pose_with_covariance.hpp>
+#include <carla_msgs/msg/carla_ego_vehicle_control.hpp>
 #include <vector>
 #include <string>
 #include <memory>
@@ -17,7 +19,7 @@ namespace mobile_system_control
     public:
         PIDController();
         ~PIDController();
-        void CarlaInputCallback(const std_msgs::msg::Float32MultiArray::SharedPtr input);
+        void poseCallback(const geometry_msgs::msg::PoseWithCovariance::SharedPtr msg);
         void ReadPath();
         void RunPID();
         int FindClosestIndex();
@@ -25,8 +27,9 @@ namespace mobile_system_control
     private:
         // Subscriber and Publisher
         rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr sub_carla;
-        rclcpp::Publisher<geometry_msgs::msg::Vector3Stamped>::SharedPtr pub_cmd;
+        rclcpp::Subscription<geometry_msgs::msg::PoseWithCovariance>::SharedPtr pose_sub_;
         rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr pub_err;
+        rclcpp::Publisher<carla_msgs::msg::CarlaEgoVehicleControl>::SharedPtr carla_cmd_pub;
         // Parameters
         std::string data_path;
         float Kp;
